@@ -55,9 +55,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Character.cs" />
+     <Compile Include="Assets\Scripts\IRaycastableObject.cs" />
      <Compile Include="Assets\Scripts\Map.cs" />
      <Compile Include="Assets\Scripts\MapGenerator.cs" />
+     <Compile Include="Assets\Scripts\Platform.cs" />
      <Compile Include="Assets\Scripts\RaycastTest.cs" />
+     <Compile Include="Assets\Scripts\SpriteOutline.cs" />
+     <None Include="Assets\Shader\SpriteOutline.shader" />
+     <None Include="Assets\Shader\OutlineTest.shader" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/guill/Documents/GitHub/2.5DTactical/2.5DTacticalProject/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

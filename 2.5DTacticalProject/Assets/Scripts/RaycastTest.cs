@@ -5,6 +5,8 @@ using UnityEngine;
 public class RaycastTest : MonoBehaviour
 {
     public Camera cam;
+    public LayerMask layer;
+    private IRaycastableObject lastPlatformHit;
 
     // Start is called before the first frame update
     void Start()
@@ -15,21 +17,29 @@ public class RaycastTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            //Orientation Input
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-            float rayDistance;
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit, float.PositiveInfinity, layer);
 
-            if (groundPlane.Raycast(ray, out rayDistance))
+        if (hit.transform != null)
+        {
+            IRaycastableObject obj = hit.transform.gameObject.GetComponent<IRaycastableObject>();
+            if(lastPlatformHit != null)
             {
-                Vector3 point = ray.GetPoint(rayDistance);
-                Debug.Log(point);
-                Debug.DrawLine(ray.origin, point, Color.red);
+                lastPlatformHit.onRaycastExit();
+            }
+            lastPlatformHit = obj;
+            obj.onRaycastHit();
+            Debug.Log(hit.transform.gameObject.name);
+        }
+        else
+        {
+            if (lastPlatformHit != null)
+            {
+                lastPlatformHit.onRaycastExit();
+                lastPlatformHit = null;
             }
         }
-        
-
     }
 }
